@@ -4,6 +4,7 @@ import com.moldavets.library.model.dto.Book;
 import com.moldavets.library.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,29 +17,30 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public List<Book> getAll() {
-        return bookService.getAll();
+    public ResponseEntity<List<Book>> getAll() {
+        return ResponseEntity.ok(bookService.getAll());
     }
 
     @GetMapping("/{bookId}")
-    public Book getById(@PathVariable Long bookId) {
-        return bookService.getById(bookId);
+    public ResponseEntity<Book> getById(@PathVariable Long bookId) {
+        return ResponseEntity.ok(bookService.getById(bookId));
     }
 
     @PostMapping
-    public Book create(@RequestBody @Valid Book book) {
-        return bookService.save(book);
+    public ResponseEntity<Book> create(@RequestBody @Valid Book book) {
+        return ResponseEntity.ok(bookService.save(book));
     }
 
     @PutMapping("/{bookId}")
-    public Book update(@PathVariable Long bookId,
+    public ResponseEntity<Book> update(@PathVariable Long bookId,
                        @RequestBody @Valid Book book) {
-        return bookService.update(bookId, book);
+        return ResponseEntity.ok(bookService.update(bookId, book));
     }
 
     @DeleteMapping("/{bookId}")
-    public void delete(@PathVariable Long bookId) {
+    public ResponseEntity<Void> delete(@PathVariable Long bookId) {
         bookService.delete(bookId);
+        return ResponseEntity.noContent().build();
     }
 
 }
