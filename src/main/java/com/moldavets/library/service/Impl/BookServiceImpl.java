@@ -2,6 +2,8 @@ package com.moldavets.library.service.Impl;
 
 import com.moldavets.library.mapper.BookMapper;
 import com.moldavets.library.model.dto.Book;
+import com.moldavets.library.model.search.BookSearchRequest;
+import com.moldavets.library.model.search.BookSpecificationBuilder;
 import com.moldavets.library.repository.BookRepository;
 import com.moldavets.library.service.BookService;
 import jakarta.persistence.EntityNotFoundException;
@@ -15,6 +17,16 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+
+    @Override
+    public List<Book> search(BookSearchRequest searchRequest) {
+        var specification = BookSpecificationBuilder.builder()
+                .withIds(searchRequest.getIds())
+                .withTitles(searchRequest.getTitles())
+                .withProductionDateBetween(searchRequest.getProductionDateFrom(), searchRequest.getProductionDateTo())
+                .build();
+        return BookMapper.INSTANCE.map(bookRepository.findAll(specification));
+    }
 
     @Override
     public Book getById(Long bookId) {
