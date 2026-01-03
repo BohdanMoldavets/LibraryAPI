@@ -1,16 +1,14 @@
 server:
   port: 8080
-
+  servlet:
+    context-path: "/api"
 spring:
-  data:
-    rest:
-      base-path: "/api"
   h2:
     console:
       enabled: true
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:h2:mem:testdb}
-    driver-class-name: org.h2.Driver
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME:org.h2.Driver}
     username: ${SPRING_DATASOURCE_USERNAME:admin}
     password: ${SPRING_DATASOURCE_PASSWORD:admin}
   jpa:

@@ -1,7 +1,8 @@
 package com.moldavets.library.mapper;
 
 import com.moldavets.library.model.BookEntity;
-import com.moldavets.library.model.dto.Book;
+import com.moldavets.library.model.dto.BookRequest;
+import com.moldavets.library.model.dto.BookResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -12,7 +13,10 @@ public interface BookMapper {
 
     BookMapper INSTANCE = Mappers.getMapper(BookMapper.class);
 
-    BookEntity map(Book book);
-    Book map(BookEntity bookEntity);
-    List<Book> map (List<BookEntity> bookEntity);
+    BookEntity map(BookRequest bookRequest);
+    BookRequest map(BookEntity bookEntity);
+    List<BookRequest> map (List<BookEntity> bookEntity);
+    BookResponse mapToResponse(BookEntity bookEntity);
+
+    List<BookResponse> mapToResponse(List<BookEntity> bookEntities);
 }

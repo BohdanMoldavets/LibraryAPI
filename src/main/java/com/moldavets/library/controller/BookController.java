@@ -1,6 +1,7 @@
 package com.moldavets.library.controller;
 
-import com.moldavets.library.model.dto.Book;
+import com.moldavets.library.model.dto.BookRequest;
+import com.moldavets.library.model.dto.BookResponse;
 import com.moldavets.library.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,24 +18,24 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public ResponseEntity<List<Book>> getAll() {
+    public ResponseEntity<List<BookResponse>> getAll() {
         return ResponseEntity.ok(bookService.getAll());
     }
 
     @GetMapping("/{bookId}")
-    public ResponseEntity<Book> getById(@PathVariable Long bookId) {
+    public ResponseEntity<BookResponse> getById(@PathVariable Long bookId) {
         return ResponseEntity.ok(bookService.getById(bookId));
     }
 
     @PostMapping
-    public ResponseEntity<Book> create(@RequestBody @Valid Book book) {
-        return ResponseEntity.ok(bookService.save(book));
+    public ResponseEntity<BookResponse> create(@RequestBody @Valid BookRequest bookRequest) {
+        return ResponseEntity.ok(bookService.save(bookRequest));
     }
 
     @PutMapping("/{bookId}")
-    public ResponseEntity<Book> update(@PathVariable Long bookId,
-                       @RequestBody @Valid Book book) {
-        return ResponseEntity.ok(bookService.update(bookId, book));
+    public ResponseEntity<BookResponse> update(@PathVariable Long bookId,
+                                              @RequestBody @Valid BookRequest bookRequest) {
+        return ResponseEntity.ok(bookService.update(bookId, bookRequest));
     }
 
     @DeleteMapping("/{bookId}")

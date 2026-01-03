@@ -2,12 +2,12 @@ package com.moldavets.library.service;
 
 import java.util.List;
 
-public interface CrudService<T> {
+public interface CrudService<T, R> {
 
-    T getById(Long id);
-    List<T> getAll();
-    T save(T object);
-    T update(Long id, T object);
+    R getById(Long id);
+    List<R> getAll();
+    R save(T object);
+    R update(Long id, T object);
     void delete(Long id);
 
 }

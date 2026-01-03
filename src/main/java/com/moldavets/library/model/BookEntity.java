@@ -6,13 +6,15 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
-@Entity
-@Builder
-@Table(name = "BOOKS")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@Builder
+@Entity
+@Table(name = "BOOKS")
+@ToString(exclude = "author")
+@EqualsAndHashCode
 public class BookEntity extends AbstractAuditingEntity<Long> {
 
     @Id
@@ -26,13 +28,10 @@ public class BookEntity extends AbstractAuditingEntity<Long> {
     @Column(name = "PRODUCTION_DATE")
     private LocalDate productionDate;
 
-    @ManyToMany
-    @JoinTable(
-            name = "BOOKS_AUTHORS",
-            joinColumns = @JoinColumn(name = "BOOK_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID", referencedColumnName = "ID")
-    )
-    private List<AuthorEntity> authors;
+    @EqualsAndHashCode.Exclude
+    @ManyToOne
+    @JoinColumn(name = "AUTHOR_ID", nullable = false)
+    private AuthorEntity author;
 
 }
 

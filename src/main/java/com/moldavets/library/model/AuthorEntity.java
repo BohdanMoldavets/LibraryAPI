@@ -5,13 +5,15 @@ import lombok.*;
 
 import java.util.List;
 
-@Entity
-@Table(name = "AUTHORS")
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@Builder
+@Entity
+@Table(name = "AUTHORS")
+@ToString(exclude = "books")
+@EqualsAndHashCode
 public class AuthorEntity extends AbstractAuditingEntity<Long> {
 
     @Id
@@ -25,7 +27,8 @@ public class AuthorEntity extends AbstractAuditingEntity<Long> {
     @Column(name = "LAST_NAME")
     private String lastName;
 
-    @ManyToMany(mappedBy = "authors")
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<BookEntity> books;
 
 

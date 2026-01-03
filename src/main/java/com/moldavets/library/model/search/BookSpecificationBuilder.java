@@ -54,7 +54,4 @@ public class BookSpecificationBuilder {
         return spec;
     }
 
-    private boolean isValidDates(LocalDate from, LocalDate to) {
-    }
-
 }
