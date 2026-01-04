@@ -36,18 +36,34 @@ public class BookSpecificationBuilder {
         return this;
     }
 
-    public BookSpecificationBuilder withProductionDateBetween(LocalDate from, LocalDate to) {
+    public BookSpecificationBuilder withYearBetween(Integer from, Integer to) {
         if (Objects.nonNull(from) && Objects.nonNull(to)) {
             spec = spec.and((root, query, cb) ->
-                    cb.between(root.get("PRODUCTION_DATE"), from, to));
+                    cb.between(root.get("PRODUCTION_YEAR"), from, to));
         } else if (Objects.nonNull(from)) {
             spec = spec.and((root, query, cb) ->
-                    cb.greaterThanOrEqualTo(root.get("PRODUCTION_DATE"), from));
+                    cb.greaterThanOrEqualTo(root.get("PRODUCTION_YEAR"), from));
         } else if (Objects.nonNull(to)) {
             spec = spec.and((root, query, cb) ->
-                    cb.lessThanOrEqualTo(root.get("PRODUCTION_DATE"), to));
+                    cb.lessThanOrEqualTo(root.get("PRODUCTION_YEAR"), to));
         }
         return this;
+    }
+
+    public BookSpecificationBuilder withAuthorId(Long authorId) {
+        if (Objects.nonNull(authorId)) {
+            Specification<BookEntity> s = (root, query, criteriaBuilder) ->
+                    root.get("author").get("id").in(List.of(authorId));
+            addSpec(s);
+        }
+        return this;
+    }
+
+    private void addSpec(Specification<BookEntity> toAdd) {
+        if (toAdd == null) {
+            return;
+        }
+        spec = (spec == null) ? toAdd : spec.and(toAdd);
     }
 
     public Specification<BookEntity> build() {

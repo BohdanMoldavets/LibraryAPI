@@ -25,8 +25,8 @@ public class BookEntity extends AbstractAuditingEntity<Long> {
     @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "PRODUCTION_DATE")
-    private LocalDate productionDate;
+    @Column(name = "PRODUCTION_YEAR")
+    private Integer year;
 
     @EqualsAndHashCode.Exclude
     @ManyToOne

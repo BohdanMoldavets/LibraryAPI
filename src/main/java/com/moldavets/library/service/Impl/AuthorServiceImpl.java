@@ -1,5 +1,6 @@
 package com.moldavets.library.service.Impl;
 
+import com.moldavets.library.exception.AuthorNotFound;
 import com.moldavets.library.mapper.AuthorMapper;
 import com.moldavets.library.model.dto.AuthorRequest;
 import com.moldavets.library.model.dto.AuthorResponse;
@@ -21,7 +22,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public AuthorResponse getById(Long authorId) {
         var authorEntity = authorRepository.findById(authorId)
-                .orElseThrow(() -> new EntityNotFoundException("Entity not found"));
+                .orElseThrow(() -> new AuthorNotFound("Entity not found"));
         return AuthorMapper.INSTANCE.map(authorEntity);
     }
 
@@ -39,10 +40,10 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     @Transactional
-    public AuthorResponse update(Long id, AuthorRequest object) {
+    public AuthorResponse update(Long id, AuthorRequest authorRequest) {
         var storedBook = authorRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Entity not found"));
-
+                .orElseThrow(() -> new AuthorNotFound("Entity not found"));
+        AuthorMapper.INSTANCE.update(authorRequest, storedBook);
         var updatedAuthorEntity = authorRepository.saveAndFlush(storedBook);
         return AuthorMapper.INSTANCE.map(updatedAuthorEntity);
     }
@@ -51,7 +52,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Transactional
     public void delete(Long id) {
         var storedAuthor = authorRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Entity not found"));
+                .orElseThrow(() -> new AuthorNotFound("Entity not found"));
 
         authorRepository.delete(storedAuthor);
     }

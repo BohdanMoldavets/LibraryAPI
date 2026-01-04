@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface BookService extends CrudService<BookRequest, BookResponse> {
 
+    List<BookResponse> getAll(Long authorId);
     List<BookResponse> search(BookSearchRequest searchRequest);
 
 }

@@ -12,10 +12,9 @@ public class BookResponse {
 
     private Long id;
 
-    @NotBlank
     private String title;
 
-    private LocalDate productionDate;
+    private Integer year;
 
     private AuthorResponse author;
 

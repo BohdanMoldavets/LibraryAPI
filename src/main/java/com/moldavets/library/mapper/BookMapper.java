@@ -4,6 +4,8 @@ import com.moldavets.library.model.BookEntity;
 import com.moldavets.library.model.dto.BookRequest;
 import com.moldavets.library.model.dto.BookResponse;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -19,4 +21,5 @@ public interface BookMapper {
     BookResponse mapToResponse(BookEntity bookEntity);
 
     List<BookResponse> mapToResponse(List<BookEntity> bookEntities);
+    void update(BookRequest bookRequest, @MappingTarget BookEntity bookEntity);
 }

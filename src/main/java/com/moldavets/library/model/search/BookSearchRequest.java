@@ -9,6 +9,6 @@ import java.util.List;
 public class BookSearchRequest {
     private List<Long> ids;
     private List<String> titles;
-    private LocalDate productionDateFrom;
-    private LocalDate productionDateTo;
+    private Integer yearFrom;
+    private Integer yearTo;
 }
